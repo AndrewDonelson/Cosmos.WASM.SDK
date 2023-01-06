@@ -13,11 +13,13 @@ SHELL := /bin/bash
 #
 # this states that the this version was released on 31st December 2022 and it contains 3 features and 14 fixes/changes
 # remember to update the BUILDVERION value below this line before official releases and to set the Commit Hash tag to the same value
-BUILDVERSION=2023.01.06f1.0
-BUILDDATE=$(date '+%Y.%m.%d')
-CHAINNAME=cosm2wasmsdk
+NUMMAJOR=0
+NUMMINOR=1
+PROJECTNAME=cosm2wasmsdk
 
 ### DO NOT EDIT BELOW THIS LINE ###
+BUILDDATE=$(date '+%Y.%m.%d')
+BUILDVERSION=$(BUILDDATE)f$(NUMMAJOR).$(NUMMINOR)
 export VERSION=$(BUILDVERSION)
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 PROJECT_DIR := $(dir $(MKFILE_PATH))
@@ -26,9 +28,10 @@ REPOSITORY="$(basename `git rev-parse --show-toplevel`)"
 @echo "Auto-Detected repository: $(REPOSITORY)"
 
 build:
-	$(info ***** building $(PROJECT_NAME) *****)
-	go build -ldflags "-s -w -X main.Version=$(VERSION) -X main.BuildDate=$(BUILDDATE)" -o ./bin/$(PROJECT_NAME)
+	$(info ***** building $(PROJECTNAME) *****)
+	@cd $(PROJECT_DIR)/cmd && go build -ldflags "-s -w -X main.Version=$(BUILDVERSION) -X main.BuildDate=$(BUILDDATE)" -o $(PROJECT_DIR)/bin/$(PROJECTNAME) && cd $(PROJECT_DIR)
+	$(info ***** done *****)
 
 clean:
 	$(info ***** cleaning $(PROJECT_NAME) *****)
-	@rm -f ./bin/$(PROJECT_NAME)
+	@rm -f $(PROJECT_DIR)/bin/$(PROJECT_NAME)

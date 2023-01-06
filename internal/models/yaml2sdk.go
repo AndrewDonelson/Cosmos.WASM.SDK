@@ -269,7 +269,7 @@ func (y *Yaml2SDK) handleFunction(e *Endpoints) string {
 	} else {
 		callFunction += "// Parameters: none\n"
 	}
-	callFunction += fmt.Sprintf("func (sdk *SDKInterface) %s(%s) {\n", fnName, params)
+	callFunction += fmt.Sprintf("func %s(%s) {\n", fnName, params)
 	callFunction += fmt.Sprintf("\t// TODO: Implement %s", e.OperationID)
 	callFunction += "\n}\n"
 
