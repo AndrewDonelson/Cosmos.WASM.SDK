@@ -33,5 +33,14 @@ build:
 	$(info ***** done *****)
 
 clean:
-	$(info ***** cleaning $(PROJECT_NAME) *****)
-	@rm -f $(PROJECT_DIR)/bin/$(PROJECT_NAME)
+	$(info ***** cleaning $(PROJECTNAME) *****)
+	@rm -f $(PROJECT_DIR)/bin/$(PROJECTNAME)
+
+
+build-wasm:
+	$(info ***** building $(PROJECTNAME) wasm sdk *****)
+	@cd $(PROJECT_DIR)/sdk && GOOS=js GOARCH=wasm go build -ldflags "-s -w -X main.Version=$(VERSION) -X main.BuildDate=$(LASTBUILDDATE)" -o $(PROJECT_DIR)/bin/$(PROJECTNAME).wasm && cd $(PROJECT_DIR)
+
+clean-wasm:
+	$(info ***** cleaning $(PROJECT_NAME) wasm sdk *****)
+	@rm -f ./bin/$(PROJECT_NAME).wasm

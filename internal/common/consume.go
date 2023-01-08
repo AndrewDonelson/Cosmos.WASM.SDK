@@ -7,10 +7,6 @@ import (
 	"net/http"
 )
 
-const (
-	DEFAULT_API_HOST = "http://localhost:1317"
-)
-
 // consumeAPI consumes and API endpoint and returns the response as a map
 // Scope: Private
 // Parameters:
@@ -23,6 +19,9 @@ const (
 //	map[string]interface{}: The response as a map
 //	error: Any error that occurred
 func consumeAPI(url string, endpoint string) (map[string]interface{}, error) {
+	if url == "" {
+		url = DEFAULT_API_HOST
+	}
 	fmt.Println("Request:", url, endpoint)
 
 	epURL := url + endpoint
